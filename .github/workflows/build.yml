@@ -30,13 +30,21 @@ jobs:
           path: theos/sdks
           sparse-checkout: iPhoneOS16.5.sdk
           sparse-checkout-cone-mode: false
-      - name: Build Package
+
+      - name: Build Dylib
         run: |
           export THEOS=$GITHUB_WORKSPACE/theos
-          make package STRIP=0
-          zip -r ./packages.zip ./packages
+          # make を実行してコンパイル
+          make FINALPACKAGE=1 STRIP=0
+
+      - name: Find Dylib Artifact
+        id: find_dylib
+        run: |
+          DYLIB_PATH=$(find ./.theos/obj -name "*.dylib" -type f)
+          echo "DYLIB_PATH=${DYLIB_PATH}" >> $GITHUB_ENV
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MixEverywhere
-          path: ./packages.zip
+          name: MixEverywhere-dylib
+          path: ${{ env.DYLIB_PATH }}
