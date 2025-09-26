@@ -7,7 +7,7 @@
     // 元のオプションに 'mixWithOthers' を強制的に追加
     AVAudioSessionCategoryOptions newOptions = options | AVAudioSessionCategoryOptionMixWithOthers;
     // デバッグ用のログを出力
-    NSLog(@"[MixEverywhere] Hooked setCategory. Original options: %lu, New options: %lu", (unsigned long long)options, (unsigned long long)newOptions);
+    NSLog(@"[MixEverywhere] Hooked setCategory. Original options: %llu, New options: %llu", (unsigned long long)options, (unsigned long long)newOptions);
     // 改変したオプションで、元のメソッドを呼び出す
     return %orig(category, newOptions, outError);
 }
