@@ -13,12 +13,10 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
-      - name: Install Dependencies
-          # ...existing code...
-        - name: Ensure main utils are installed
-          uses: dhinakg/procursus-action@main
-          with:
-            packages: coreutils make xz ldid
+      - name: Ensure main utils are installed
+        uses: dhinakg/procursus-action@main
+        with:
+          packages: coreutils make xz ldid
       - name: Checkout Theos
         uses: actions/checkout@v4
         with:
