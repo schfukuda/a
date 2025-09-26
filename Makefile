@@ -8,7 +8,7 @@ TWEAK_NAME = MixEverywhere
 $(TWEAK_NAME)_FRAMEWORKS = UIKit AVFoundation
 
 # Tweakのソースファイルを指定
-$(TWEAK_NAME)_FILES = Tweak.xm
+$(TWEAK_NAME)_FILES = Tweak.x
 
 # Theosの共通Makefileを読み込み
 include $(THEOS)/makefiles/common.mk
