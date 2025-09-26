@@ -36,7 +36,7 @@ jobs:
         run: |
           export THEOS=$GITHUB_WORKSPACE/theos
           export THEOS_STAGING_DIR=$GITHUB_WORKSPACE/staging
-          make stage && ls -R
+          make package
 
       - name: Find Dylib Artifact
         id: find_dylib
