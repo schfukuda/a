@@ -34,8 +34,9 @@ jobs:
         run: |
           export THEOS=$GITHUB_WORKSPACE/theos
           make package FINALPACKAGE=1 STRIP=0
+          zip -r ./package.zip ./package
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: MixEverywhere
-          path: ./packages/*.dylib
+          path: ./packages.zip
