@@ -14,9 +14,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v4
       - name: Ensure main utils are installed
-        uses: dhinakg/procursus-action@main
-        with:
-          packages: coreutils make xz ldid
+        run: brew install coreutils make xz ldid
       - name: Checkout Theos
         uses: actions/checkout@v4
         with:
@@ -36,8 +34,7 @@ jobs:
           export THEOS=$GITHUB_WORKSPACE/theos
           export THEOS_STAGING_DIR=$GITHUB_WORKSPACE/staging
           # make を実行してコンパイル
-          make stage
-          ls -R
+          gmake stage && ls -R
 
       - name: Find Dylib Artifact
         id: find_dylib
