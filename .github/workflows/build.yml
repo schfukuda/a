@@ -34,8 +34,9 @@ jobs:
       - name: Build Dylib
         run: |
           export THEOS=$GITHUB_WORKSPACE/theos
+          export THEOS_STAGING_DIR=$GITHUB_WORKSPACE/staging
           # make を実行してコンパイル
-          make package
+          make stage
           ls -R
 
       - name: Find Dylib Artifact
