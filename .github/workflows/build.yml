@@ -34,7 +34,7 @@ jobs:
         run: |
           export THEOS=$GITHUB_WORKSPACE/theos
           make STRIP=0
-          zip -r ./packages.zip .theos
+          zip -r ./packages.zip ./packages
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
