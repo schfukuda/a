@@ -1,5 +1,5 @@
 # ビルドに使用するターゲットSDKを指定
-TARGET = iphone:clang:latest:15.0
+TARGET = iphone:clang:latest:16.5
 
 # プロジェクト名
 TWEAK_NAME = MixEverywhere
