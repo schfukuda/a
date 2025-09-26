@@ -1,6 +1,3 @@
-# ビルド対象のアーキテクチャ
-ARCHS = arm64 arm64e
-
 # ビルドに使用するターゲットSDKを指定
 TARGET = iphone:clang:latest:15.0
 
@@ -15,4 +12,4 @@ $(TWEAK_NAME)_FILES = Tweak.xm
 
 # Theosの共通Makefileを読み込み
 include $(THEOS)/makefiles/common.mk
-include $(THEOS_MAKE_PATH)/tweak.mk
+include $(THEOS_MAKE_PATH)/library.mk
