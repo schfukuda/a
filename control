@@ -1,6 +1,5 @@
 Package: com.yourname.mixeverywhere
 Name: MixEverywhere
-Depends: mobilesubstrate
 Version: 1.0.0
 Architecture: iphoneos-arm
 Description: Force enable 'mixWithOthers' for all audio sessions. Use with caution.
