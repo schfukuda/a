@@ -1,14 +1,48 @@
 #import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
+
+#import <AVFoundation/AVFoundation.h>
+#import <UIKit/UIKit.h>
 
 %hook AVAudioSession
 
-// アプリがオーディオセッションのカテゴリを設定するメソッドに割り込む
+// --- setActive:withOptions:error: ---
+-(BOOL)setActive:(BOOL)active withOptions:(AVAudioSessionCategoryOptions)options error:(NSError **)outError {
+    if (active) {
+        AVAudioSessionCategoryOptions currentOptions = self.categoryOptions;
+        if (!(currentOptions & AVAudioSessionCategoryOptionMixWithOthers)) {
+            AVAudioSessionCategoryOptions newOptions = currentOptions | AVAudioSessionCategoryOptionMixWithOthers;
+            NSLog(@"[MixEverywhere] Hooked setActive. Forcing mixWithOthers. Options: %llu -> %llu", (unsigned long long)currentOptions, (unsigned long long)newOptions);
+            NSError *setError = nil;
+            [self setCategory:self.category withOptions:newOptions error:&setError];
+            if (setError) {
+                NSLog(@"[MixEverywhere] Error forcing category via setActive: %@", setError);
+            }
+        }
+    }
+    return %orig(active, options, outError);
+}
+
+// --- setActive:error: (legacy) ---
+-(BOOL)setActive:(BOOL)active error:(NSError **)outError {
+    if (active) {
+        AVAudioSessionCategoryOptions currentOptions = self.categoryOptions;
+        if (!(currentOptions & AVAudioSessionCategoryOptionMixWithOthers)) {
+            AVAudioSessionCategoryOptions newOptions = currentOptions | AVAudioSessionCategoryOptionMixWithOthers;
+            NSLog(@"[MixEverywhere] Hooked setActive (legacy). Forcing mixWithOthers. Options: %llu -> %llu", (unsigned long long)currentOptions, (unsigned long long)newOptions);
+            NSError *setError = nil;
+            [self setCategory:self.category withOptions:newOptions error:&setError];
+            if (setError) {
+                NSLog(@"[MixEverywhere] Error forcing category via setActive (legacy): %@", setError);
+            }
+        }
+    }
+    return %orig(active, outError);
+}
+
+// --- setCategory:withOptions:error: ---
 -(BOOL)setCategory:(NSString *)category withOptions:(AVAudioSessionCategoryOptions)options error:(NSError **)outError {
-    // 元のオプションに 'mixWithOthers' を強制的に追加
     AVAudioSessionCategoryOptions newOptions = options | AVAudioSessionCategoryOptionMixWithOthers;
-    // デバッグ用のログを出力
-    NSLog(@"[MixEverywhere] Hooked setCategory. Original options: %llu, New options: %llu", (unsigned long long)options, (unsigned long long)newOptions);
-    // 改変したオプションで、元のメソッドを呼び出す
     return %orig(category, newOptions, outError);
 }
 

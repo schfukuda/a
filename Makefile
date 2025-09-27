@@ -1,15 +1,11 @@
-# ビルドに使用するターゲットSDKを指定
-TARGET = iphone:clang:latest:16.5
+TARGET := iphone:clang:latest:7.0
 
-# プロジェクト名
-TWEAK_NAME = MixEverywhere
 
-# リンクするフレームワークを指定
-$(TWEAK_NAME)_FRAMEWORKS = UIKit AVFoundation
-
-# Tweakのソースファイルを指定
-$(TWEAK_NAME)_FILES = Tweak.x
-
-# Theosの共通Makefileを読み込み
 include $(THEOS)/makefiles/common.mk
-include $(THEOS_MAKE_PATH)/library.mk
+
+TWEAK_NAME = ev
+
+ev_FILES = Tweak.x
+ev_CFLAGS = -fobjc-arc
+
+include $(THEOS_MAKE_PATH)/tweak.mk
